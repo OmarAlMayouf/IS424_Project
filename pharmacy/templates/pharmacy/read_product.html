@@ -1,0 +1,37 @@
+{% extends 'pharmacy/base.html' %}
+{% load static %}
+{% block content %}
+    <h1>Medicines List</h1>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">
+                <form class="d-flex  mt-3" role="search" method="GET" action="{% url 'search_medicines' %}" >
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="query">
+                    <button class="btn btn-outline-dark" type="submit">Search</button>
+                </form>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="d-flex flex-wrap">
+                    {% if products %}
+                        {% for product in products %}
+                        <div class="card m-3" style="width: 18rem;">
+                            <img class="card-img-top h-75 w-100" src="{{ product.picture }}" alt="Card Image">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ product.name }}</h5>
+                                <a href="{% url 'view_product' product.id %}" class="btn btn-primary">View</a>
+                            </div>
+                        </div>
+                        
+                        {% endfor %} 
+                    {% else %}
+                        <p>You have no medicines yet. Add one <a class="text-danger" href="{% url 'create_product' %}">here</a></p>
+                    {% endif %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}
